@@ -1,3 +1,12 @@
+<div nz-row nzJustify="center" nzAlign="middle">
+  <div nz-col nzSpan="24" nzJustify="center">
+      <h1>Docentes</h1>
+  </div>
+</div>
+<div nz-row>
+  <div nz-col nzSpan="24"></div><button nz-button nzType="primary" (click)="mostrarModal()">Nuevo Docente</button>
+</div>
+<hr>
 <nz-table #basicTable [nzData]="docentes">
     <thead>
       <tr>
@@ -5,7 +14,7 @@
         <th>nombre docente</th>
         <th>salario</th>
         <th>sexo</th>
-        <!--<th>Action</th>-->
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -14,11 +23,67 @@
         <td>{{ data.nombreDocente }}</td>
         <td>{{ data.salario }}</td>
         <td>{{ data.sexoDocente }}</td>
-        <!--<td>
-          <a>Action 一 {{ data.name }}</a>
+        <td>
+          <a (click)="mostrar(data)"><i nz-icon nzType="edit"></i>&nbsp;Modificar</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a>Delete</a>
-        </td>-->
+          <!--Coloque nombreDocente porque da error-->
+          <a nz-popconfirm nzPopconfirmTitle="¿Está seguro de borrar el registro?"
+          nzPopconfirmPlacement="bottom" (nzOnConfirm)="eliminar(data.IDDocente)" (nzOnCancel)="cancel()"
+          nzShape="circle" nzCancelText="No" nzOkText="Si">
+          <i nz-icon nzType="delete" nzTheme="outline"></i> Eliminar
+        </a>
+        </td>
       </tr>
     </tbody>
   </nz-table>
+  <nz-modal [(nzVisible)]="visible" nzTitle="Formulario Docentes">
+    <ng-container *nzModalContent>
+      <form nz-form nzLayout="vertical" (ngSubmit)="guardar()" [formGroup]="formDocentes">
+      <div nz-row [nzGutter]="8">
+        <div nz-col nzSpan="24">
+            <nz-form-item>
+                <nz-form-label>IDDocente</nz-form-label>
+                <nz-form-control nzErrorTip="Por favor escriba el dato correcto!">
+                    <input formControlName="IDDocente" nz-input placeholder="No es necesario llenar este campo" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+      </div>
+      <div nz-row [nzGutter]="8">
+        <div nz-col nzSpan="24">
+            <nz-form-item>
+                <nz-form-label>Nombre del docente</nz-form-label>
+                <nz-form-control nzErrorTip="Por favor escriba el dato correcto!">
+                    <input formControlName="nombreDocente" nz-input placeholder="Escribe el nombre del docente" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+      </div>
+      <div nz-row [nzGutter]="8">
+        <div nz-col nzSpan="24">
+            <nz-form-item>
+                <nz-form-label>Salario</nz-form-label>
+                <nz-form-control nzErrorTip="Por favor escriba el dato correcto!">
+                    <input formControlName="salario" nz-input placeholder="Escribe el salario del docente" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+      </div>
+      <div nz-row [nzGutter]="8">
+        <div nz-col nzSpan="24">
+            <nz-form-item>
+                <nz-form-label>Sexo del Docente</nz-form-label>
+                <nz-form-control nzErrorTip="Por favor escriba el dato correcto!">
+                    <input formControlName="sexoDocente" nz-input placeholder="Escribe el sexo del docente" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+      </div>
+    </form>
+    </ng-container>
+    <div *nzModalFooter>
+      <button nz-button nzType="default" (click)="ocultar()">Cancelar</button>
+      <button nz-button nzType="default" (click)="guardar()">Guardar</button>
+      <button nz-button nzType="default" (click)="actualizar()">Actualizar</button>
+    </div>
+  </nz-modal>

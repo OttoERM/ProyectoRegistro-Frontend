@@ -5,7 +5,7 @@
  * (tsType: AlumnosWithRelations, schemaOptions: { includeRelations: true })
  */
 export interface AlumnosWithRelations {
-  IDAlumno?: string;
+  IDAlumno: string;
   IDClase: string;
   IDMatricula: string;
   apellido: string;

@@ -17,8 +17,7 @@ export class ClasesComponent implements OnInit {
   constructor
   ( private claseServices:ClasesControllerService, 
     private messageService: NzMessageService,
-    private fb:FormBuilder)
-  {
+    private fb:FormBuilder) {
     this.clases=[]
   }
 
@@ -72,7 +71,7 @@ export class ClasesComponent implements OnInit {
     this.visible = false
   }
   
-  actualizar(){
+  actualizar():void{
     if(this.formClases.value.IDClase){
       this.claseServices.updateById({'id': this.formClases.value.IDClase,'body': this.formClases.value}
         ).subscribe(()=>{this.clases = this.clases.map(obj => {
@@ -85,5 +84,5 @@ export class ClasesComponent implements OnInit {
         this.formClases.reset()
       })
   } }
-
+  
 }
