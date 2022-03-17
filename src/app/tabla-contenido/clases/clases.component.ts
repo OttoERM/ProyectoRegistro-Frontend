@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Clases} from 'src/app/api/models';
 import { ClasesControllerService } from 'src/app/api/services';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-clases',
@@ -15,16 +16,20 @@ export class ClasesComponent implements OnInit {
 
   constructor
   ( private claseServices:ClasesControllerService, 
-    private messageService: NzMessageService)
+    private messageService: NzMessageService,
+    private fb:FormBuilder)
   {
     this.clases=[]
   }
 
-  ngOnInit(): void {
-    this.getClases()
-  }
+  formClases: FormGroup = this.fb.group({
+    IDClase:[],
+    nombreClase:[],
+    IDDocente:[],
+    IDNota:[]
+  })
 
-  getClases(){
+  ngOnInit(): void {
     this.claseServices.find().subscribe(datos => this.clases = datos)
   }
 
@@ -41,9 +46,13 @@ export class ClasesComponent implements OnInit {
 
   ocultar():void{
     this.visible=false;
+    this.formClases.reset()
   }
 
   mostrar(data:Clases):void{
+    if(data.IDClase){
+      this.formClases.setValue(data)
+    }
     this.visible=true;
   }
 
@@ -52,7 +61,29 @@ export class ClasesComponent implements OnInit {
   }
 
   guardar():void{
-
+    this.formClases.setValue({...this.formClases.value})
+    delete this.formClases.value.id
+    this.claseServices.create({body:this.formClases.value}).subscribe((datoAgregado) => {
+      this.clases = [...this.clases, datoAgregado]
+      this.messageService.success('Registro creado con exito')
+    })
+    this.formClases.reset()
+    console.log(this.formClases.value)
+    this.visible = false
   }
+  
+  actualizar(){
+    if(this.formClases.value.IDClase){
+      this.claseServices.updateById({'id': this.formClases.value.IDClase,'body': this.formClases.value}
+        ).subscribe(()=>{this.clases = this.clases.map(obj => {
+          if(obj.IDClase === this.formClases.value.IDClase){
+            return this.formClases.value;
+          }
+          return obj;
+        })
+        this.messageService.success('Registro actualizado con exito')
+        this.formClases.reset()
+      })
+  } }
 
 }

@@ -39,10 +39,52 @@
 
   <nz-modal [(nzVisible)]="visible" nzTitle="Formulario Clases">
     <ng-container *nzModalContent>
-      <form nz-form nzLayout="vertical" (ngSubmit)="guardar()"></form>
+      <form nz-form nzLayout="vertical" (ngSubmit)="guardar()" [formGroup]="formClases">
+      <div nz-row [nzGutter]="8">
+        <div nz-col nzSpan="24">
+            <nz-form-item>
+                <nz-form-label>ID Clase</nz-form-label>
+                <nz-form-control nzErrorTip="Por favor escriba el dato correcto!">
+                    <input formControlName="IDClase" nz-input placeholder="Escribe el codigo de la clase" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+      </div>
+      <div nz-row [nzGutter]="8">
+        <div nz-col nzSpan="24">
+            <nz-form-item>
+                <nz-form-label>Nombre de la clase</nz-form-label>
+                <nz-form-control nzErrorTip="Por favor escriba el dato correcto!">
+                    <input formControlName="nombreClase" nz-input placeholder="Escribe el nombre de la clase" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+      </div>
+      <div nz-row [nzGutter]="8">
+        <div nz-col nzSpan="24">
+            <nz-form-item>
+                <nz-form-label>ID Docente</nz-form-label>
+                <nz-form-control nzErrorTip="Por favor escriba el dato correcto!">
+                    <input formControlName="IDDocente" nz-input placeholder="Escribe el nombre del docente" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+      </div>
+      <div nz-row [nzGutter]="8">
+        <div nz-col nzSpan="24">
+            <nz-form-item>
+                <nz-form-label>ID Nota</nz-form-label>
+                <nz-form-control nzErrorTip="Por favor escriba el dato correcto!">
+                    <input formControlName="IDNota" nz-input placeholder="Escribe el codigo de la nota" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+      </div>
+    </form>
     </ng-container>
     <div *nzModalFooter>
       <button nz-button nzType="default" (click)="ocultar()">Cancelar</button>
       <button nz-button nzType="default" (click)="guardar()">Guardar</button>
+      <button nz-button nzType="default" (click)="actualizar()">Actualizar</button>
     </div>
   </nz-modal>
