@@ -1,3 +1,12 @@
+<div nz-row nzJustify="center" nzAlign="middle">
+  <div nz-col nzSpan="24" nzJustify="center">
+      <h1>Clases</h1>
+  </div>
+</div>
+<div nz-row>
+  <div nz-col nzSpan="24"></div><button nz-button nzType="primary" (click)="mostrarModal()">Nueva Clase</button>
+</div>
+<hr>
 <nz-table #basicTable [nzData]="clases">
     <thead>
       <tr>
@@ -5,7 +14,7 @@
         <th>NombreClase</th>
         <th>IDDocente</th>
         <th>IDNota</th>
-        <!--<th>Action</th>-->
+        <th>Accion</th>
       </tr>
     </thead>
     <tbody>
@@ -14,11 +23,26 @@
         <td>{{ data.nombreClase }}</td>
         <td>{{ data.IDDocente }}</td>
         <td>{{ data.IDNota }}</td>
-        <!--<td>
-          <a>Action 一 {{ data.name }}</a>
+        <td>
+          <a (click)="mostrar(data)"><i nz-icon nzType="edit"></i>&nbsp;Modificar</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a>Delete</a>
-        </td>-->
+          <a nz-popconfirm nzPopconfirmTitle="¿Está seguro de borrar el registro?"
+            nzPopconfirmPlacement="bottom" (nzOnConfirm)="eliminar(data.IDClase)" (nzOnCancel)="cancel()"
+            nzShape="circle" nzCancelText="No" nzOkText="Si">
+            <i nz-icon nzType="delete" nzTheme="outline"></i> Eliminar
+          </a>
+          <!--<a><i nz-icon nzType="delete"></i>&nbsp;Borrar</a>-->
+        </td>
       </tr>
     </tbody>
   </nz-table>
+
+  <nz-modal [(nzVisible)]="visible" nzTitle="Formulario Clases">
+    <ng-container *nzModalContent>
+      <form nz-form nzLayout="vertical" (ngSubmit)="guardar()"></form>
+    </ng-container>
+    <div *nzModalFooter>
+      <button nz-button nzType="default" (click)="ocultar()">Cancelar</button>
+      <button nz-button nzType="default" (click)="guardar()">Guardar</button>
+    </div>
+  </nz-modal>

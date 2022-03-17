@@ -1,0 +1,26 @@
+<nz-table #basicTable [nzData]="notas">
+    <thead>
+      <tr>
+        <th>IDNota</th>
+        <th>Parcial 1</th>
+        <th>Parcial 2</th>
+        <th>Parcial 3</th>
+        <th>Parcial 4</th>
+        <!--<th>Action</th>-->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.IDNota }}</td>
+        <td>{{ data.P1 }}</td>
+        <td>{{ data.P2 }}</td>
+        <td>{{ data.P3 }}</td>
+        <td>{{ data.P4 }}</td>
+        <!--<td>
+          <a>Action 一 {{ data.name }}</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a>Delete</a>
+        </td>-->
+      </tr>
+    </tbody>
+  </nz-table>
